@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:portfolio_web/constants.dart';
 import '../../model/projects.dart';
 import '../main/main_screen.dart';
@@ -15,21 +16,39 @@ class HomeScreen extends StatelessWidget {
       children: [
         const HomeBanner(),
         const HighLightsInfo(),
+        // MyProject(),
+        MyProjects(),
+
+      ],
+    );
+  }
+}
+
+class MyProjects extends StatelessWidget {
+  const MyProjects({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         Text(
-          'My Projects',
-          style: Theme.of(context).textTheme.titleLarge,
+          "My Projects",
+          style: Theme.of(context).textTheme.headline6,
         ),
         GridView.builder(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: demo_projects.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 1.3,
-              crossAxisSpacing: defaultPadding,
-              mainAxisExtent: defaultPadding
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 1.3,
+            crossAxisSpacing: defaultPadding,
+            mainAxisSpacing: defaultPadding,
           ),
-          itemBuilder: (context, index) => ProjectCard(
+          itemBuilder: (context, index) => MyProjectCard(
             project: demo_projects[index],
           ),
         )
@@ -38,8 +57,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class ProjectCard extends StatelessWidget {
-  const ProjectCard({
+class MyProjectCard extends StatelessWidget {
+  const MyProjectCard({
     super.key,
     required this.project,
   });
@@ -49,7 +68,7 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(defaultPadding),
+      padding: EdgeInsets.all(defaultPadding),
       color: secondaryColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,18 +77,19 @@ class ProjectCard extends StatelessWidget {
             project.title!,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Theme.of(context).textTheme.subtitle2,
           ),
-          const Spacer(),
+          Spacer(),
           Text(
-           project.description!,
-            maxLines: 5,
+            project.description!,
+            maxLines: 4,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(height: 1.5),
+            style: TextStyle(height: 1.5),
           ),
-          const Spacer(),
-          TextButton(onPressed: () {
-          }, child: const Text('Read More>>',style: TextStyle(color: primaryColor),))
+          Spacer(),
+          TextButton(onPressed: () {}, child: Text("Read More>>",style: TextStyle(
+            color: primaryColor
+          ),))
         ],
       ),
     );
