@@ -27,5 +27,9 @@ List<Project> demo_projects=[
     title: 'Festival App',
     description: 'Get ready to experience festivals like never before with Festiva, your ultimate festival companion app. Whether you re a seasoned festival-goer or attending your first event, Festiva has everything you need to plan, navigate, and make the most of your festival experience.'
   ),
+  Project(
+    title: 'Quotes App',
+    description: 'quotations can provide important pieces of evidence and lend fresh voices and perspectives to your narrative. Used ineffectively, however, quotations can clutter your text and interrupt the flow of your argument.'
+  )
 
 ];

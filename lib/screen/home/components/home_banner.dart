@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio_web/responsive.dart';
 
 import '../../../constants.dart';
 
@@ -11,7 +12,7 @@ class HomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-        aspectRatio: 3,
+        aspectRatio: Responsive.isMobile(context)?2.5:3,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -23,25 +24,25 @@ class HomeBanner extends StatelessWidget {
               color: darkColor.withOpacity(0.66),
             ),
             Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: defaultPadding),
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Discover my Amazing \n Art Space!',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineLarge
-                        ?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                    style: Responsive.isDesktop(context)
+                        ? Theme.of(context).textTheme.headlineLarge?.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold)
+                        : Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   const MyBuildAnimatedText(),
+                  if(Responsive.isMobile(context))
                   const SizedBox(
-                    height: defaultPadding,
+                    height: defaultPadding / 2,
                   ),
+                  if(Responsive.isMobile(context))
                   ElevatedButton(
                       onPressed: () {},
                       style: TextButton.styleFrom(
@@ -63,7 +64,6 @@ class HomeBanner extends StatelessWidget {
   }
 }
 
-
 class MyBuildAnimatedText extends StatelessWidget {
   const MyBuildAnimatedText({
     super.key,
@@ -75,7 +75,9 @@ class MyBuildAnimatedText extends StatelessWidget {
       style: Theme.of(context).textTheme.titleLarge!,
       child: Row(
         children: [
+          if(Responsive.isMobile(context))
           const FlutterCodeText(),
+          if(Responsive.isMobile(context))
           const SizedBox(
             width: defaultPadding / 2,
           ),
@@ -88,9 +90,11 @@ class MyBuildAnimatedText extends StatelessWidget {
             TyperAnimatedText('Chat app With dark and light theme.',
                 speed: const Duration(milliseconds: 60)),
           ]),
+          if(Responsive.isMobile(context))
           const SizedBox(
             width: defaultPadding / 2,
           ),
+          if(Responsive.isMobile(context))
           const FlutterCodeText(),
         ],
       ),
