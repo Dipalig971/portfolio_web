@@ -1,7 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_web/responsive.dart';
-
 import '../../../constants.dart';
 
 class HomeBanner extends StatelessWidget {
@@ -12,55 +11,62 @@ class HomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-        aspectRatio: Responsive.isMobile(context)?2.5:3,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(
-              'assets/images/background.jpeg',
-              fit: BoxFit.cover,
-            ),
-            Container(
-              color: darkColor.withOpacity(0.66),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Discover my Amazing \n Art Space!',
-                    style: Responsive.isDesktop(context)
-                        ? Theme.of(context).textTheme.headlineLarge?.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)
-                        : Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  const MyBuildAnimatedText(),
-                  if(Responsive.isMobile(context))
+      aspectRatio: Responsive.isMobile(context) ? 2.5 : 3,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/images/background.jpeg',
+            fit: BoxFit.cover,
+          ),
+          Container(
+            color: darkColor.withOpacity(0.66),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Discover my Amazing \nArt Space!',
+                  style: Responsive.isDesktop(context)
+                      ? Theme.of(context).textTheme.displaySmall!.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white)
+                      : Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                if (!Responsive.isMobileLarge(context))
                   const SizedBox(
                     height: defaultPadding / 2,
                   ),
-                  if(Responsive.isMobile(context))
+                const MyBuildAnimatedText(),
+                const SizedBox(
+                  height: defaultPadding,
+                ),
+                if (!Responsive.isMobileLarge(context))
                   ElevatedButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: defaultPadding * 2,
-                          vertical: defaultPadding,
-                        ),
-                        backgroundColor: primaryColor,
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                      child: const Text(
-                        'EXPLORE NOW',
-                        style: TextStyle(color: darkColor),
-                      ))
-                ],
-              ),
-            )
-          ],
-        ));
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: defaultPadding * 2,
+                          vertical: defaultPadding),
+                      backgroundColor: primaryColor,
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      'EXPLORE NOW',
+                      style: TextStyle(color: darkColor),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -72,38 +78,58 @@ class MyBuildAnimatedText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: Theme.of(context).textTheme.titleLarge!,
+      style: Theme.of(context).textTheme.titleMedium!,
+      maxLines: 1,
       child: Row(
         children: [
-          if(Responsive.isMobile(context))
-          const FlutterCodeText(),
-          if(Responsive.isMobile(context))
-          const SizedBox(
-            width: defaultPadding / 2,
-          ),
+          if (!Responsive.isMobileLarge(context)) const FlutterCodedText(),
+          if (!Responsive.isMobileLarge(context))
+            const SizedBox(
+              width: defaultPadding / 2,
+            ),
           const Text('I build '),
-          AnimatedTextKit(animatedTexts: [
-            TyperAnimatedText('responsive Web and mobile app.',
-                speed: const Duration(milliseconds: 60)),
-            TyperAnimatedText('complete e-commerce app UI.',
-                speed: const Duration(milliseconds: 60)),
-            TyperAnimatedText('Chat app With dark and light theme.',
-                speed: const Duration(milliseconds: 60)),
-          ]),
-          if(Responsive.isMobile(context))
-          const SizedBox(
-            width: defaultPadding / 2,
-          ),
-          if(Responsive.isMobile(context))
-          const FlutterCodeText(),
+          Responsive.isMobile(context)
+              ? const Expanded(child: AnimatedText())
+              : const AnimatedText(),
+          if (!Responsive.isMobileLarge(context))
+            const SizedBox(
+              width: defaultPadding / 2,
+            ),
+          if (!Responsive.isMobileLarge(context)) const FlutterCodedText(),
         ],
       ),
     );
   }
 }
 
-class FlutterCodeText extends StatelessWidget {
-  const FlutterCodeText({
+class AnimatedText extends StatelessWidget {
+  const AnimatedText({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedTextKit(
+      animatedTexts: [
+        TyperAnimatedText(
+          'responsive web and mobile app.',
+          speed: const Duration(milliseconds: 60),
+        ),
+        TyperAnimatedText(
+          'complete e-commerce app UI.',
+          speed: const Duration(milliseconds: 60),
+        ),
+        TyperAnimatedText(
+          'Chat app with dark and light theme.',
+          speed: const Duration(milliseconds: 60),
+        ),
+      ],
+    );
+  }
+}
+
+class FlutterCodedText extends StatelessWidget {
+  const FlutterCodedText({
     super.key,
   });
 
@@ -111,12 +137,13 @@ class FlutterCodeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Text.rich(
       TextSpan(
-        text: "<",
+        text: '<',
         children: [
-          TextSpan(text: 'flutter', style: TextStyle(color: primaryColor)),
           TextSpan(
-            text: '>',
-          )
+            text: 'flutter',
+            style: TextStyle(color: primaryColor),
+          ),
+          TextSpan(text: '>'),
         ],
       ),
     );

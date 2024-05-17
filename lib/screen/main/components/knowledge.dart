@@ -16,8 +16,7 @@ class Knowledge extends StatelessWidget {
       children: [
         const Divider(),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              vertical: defaultPadding),
+          padding: const EdgeInsets.symmetric(vertical: defaultPadding),
           child: Text(
             'Knowledge',
             style: Theme.of(context).textTheme.titleMedium,
